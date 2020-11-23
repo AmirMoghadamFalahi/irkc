@@ -239,7 +239,7 @@ def pipeline(hit_time=False, icon_id='slct1', path_list=None):
 
 if __name__ == '__main__':
 
-    DEFAULT_RUNTIME_INTERVAL = 1
+    DEFAULT_RUNTIME_INTERVAL = 30
     HIT_TIME_INTERVAL = 1
 
     while True:
@@ -249,7 +249,7 @@ if __name__ == '__main__':
             runtime_interval = HIT_TIME_INTERVAL
 
         else:
-            hit_time = True
+            hit_time = False
             runtime_interval = DEFAULT_RUNTIME_INTERVAL
 
         if datetime.now().minute % runtime_interval == 0:
