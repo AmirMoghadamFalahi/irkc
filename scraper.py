@@ -10,6 +10,7 @@ def make_driver(timeout=20):
     driver = webdriver.Chrome()
     driver.set_page_load_timeout(timeout)
     driver.implicitly_wait(timeout)
+    driver.maximize_window()
 
     return driver
 
@@ -42,7 +43,7 @@ def go_to_destination(driver, timeout, base_url=None, path_list=None):
         except Exception as e:
             if 'timeout' in str(e):
                 driver.quit()
-                time.sleep(2)
+                time.sleep(1)
                 driver = make_driver(timeout)
 
     return driver
@@ -66,7 +67,18 @@ def go_to_register_window(driver, hit_time, icon_id='slct1'):
 
         except Exception as e:
             print(e)
-            if "Message: element not visible" in str(e):
+            if "Message: element not visible" in str(e) or 'Unable to locate element' in str(e):
+
+                if 'j_username' in driver.page_source:
+                    print('j_username found')
+
+                    user = driver.find_element_by_name('j_username')
+                    password = driver.find_element_by_name('j_password')
+
+                    user.send_keys('s10002')
+                    password.send_keys('123456')
+                    password.send_keys(Keys.RETURN)
+
                 current_sec = datetime.now().second
                 waiting_time = refresh_interval * (int(current_sec/refresh_interval) + 1) - current_sec
                 time.sleep(waiting_time)
@@ -227,7 +239,7 @@ def pipeline(hit_time=False, icon_id='slct1', path_list=None):
 
 if __name__ == '__main__':
 
-    DEFAULT_RUNTIME_INTERVAL = 30
+    DEFAULT_RUNTIME_INTERVAL = 1
     HIT_TIME_INTERVAL = 1
 
     while True:
@@ -237,7 +249,7 @@ if __name__ == '__main__':
             runtime_interval = HIT_TIME_INTERVAL
 
         else:
-            hit_time = False
+            hit_time = True
             runtime_interval = DEFAULT_RUNTIME_INTERVAL
 
         if datetime.now().minute % runtime_interval == 0:
