@@ -55,14 +55,13 @@ def go_to_register_window(driver, hit_time, icon_id='slct1'):
     else:
         refresh_interval = 30
 
-    time.sleep(1)
-
     refresh_cnt = 0
     state = True
     while state:
 
         try:
-            driver.find_element_by_id(icon_id).click()
+            click_button = driver.find_element_by_xpath("//*[@id='" + icon_id + "']/img")
+            driver.execute_script("arguments[0].click();", click_button)
             break
 
         except Exception as e:
@@ -238,7 +237,7 @@ if __name__ == '__main__':
             runtime_interval = HIT_TIME_INTERVAL
 
         else:
-            hit_time = True
+            hit_time = False
             runtime_interval = DEFAULT_RUNTIME_INTERVAL
 
         if datetime.now().minute % runtime_interval == 0:
@@ -246,8 +245,12 @@ if __name__ == '__main__':
             path_lists = [['وظايف جاري', 'پيگيري اشتراک', 'اشتراک های قابل جذب و تمدید (بانک 2)']]
             for path_list in path_lists:
                 print('starting pipeline for:', path_list[-1])
-                pipeline(hit_time=hit_time, icon_id='slct1', path_list=path_list)
-                print('pipeline completed successfully at:', datetime.now())
+                try:
+                    pipeline(hit_time=hit_time, icon_id='slct1', path_list=path_list)
+                    print('pipeline completed successfully at:', datetime.now())
+                except Exception as e:
+                    print('whole pipeline error')
+                    print(e)
 
             print('--------------------------------------')
             if not hit_time:
