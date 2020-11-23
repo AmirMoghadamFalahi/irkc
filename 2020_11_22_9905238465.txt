@@ -1,0 +1,34 @@
+<html><head><link href="/emdad/com/objectj/resources/jsp/tiles/emdad/css/emdad.css" rel="STYLESHEET" type="text/css"/>
+<base href="http://assistance.emdadkhodro.com/emdad/com/objectj/resources/jsp/tiles/emdad/general.info.jsp"/>
+<script>
+//window.resizeTo(300, 150);
+//window.moveTo((screen.width-300)/2,(screen.height-150)/2);
+</script>
+</head><body>
+<script>
+//    alert('مشترک مشمول فراخوان دیگری نیز می باشد');
+//    alert("0تعداد موارد اضافه شده : ");
+</script>
+<center class="validation">
+<ul><li>کار خواسته شده با موفقيت انجام شد</li></ul>
+<p></p>
+<table align="center" border="0" cellpadding="3" cellspacing="0" class="generalText" dir="rtl" width="100%">
+<tbody><tr align="center">
+<td align="center">
+                0تعداد موارد اضافه شده : 
+            </td>
+</tr>
+</tbody></table>
+</center>
+<script>
+//	alert("111");
+    var p_p_f_ = top.window.postProcess;
+//	alert("p_p_f_="+p_p_f_);
+    if (p_p_f_!=null && p_p_f_!="undefined") {
+		var p_p_f_p_ = top.window.postProcessParams;
+//		alert("p_p_f_p_="+p_p_f_p_);
+		p_p_f_(p_p_f_p_);
+		top.window.focus();
+    }
+</script>
+</body></html>
